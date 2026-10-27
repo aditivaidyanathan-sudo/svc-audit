@@ -1,0 +1,26 @@
+# Warden governance policy. Change thresholds here, not in code.
+# Unknown keys are rejected so a typo cannot silently fall back to a default.
+
+dormant_days: 90              # enabled account with no logon for longer than this
+never_used_grace_days: 30     # new accounts get this long before "never used" is flagged
+password_max_age_days: 365
+
+privileged_groups:
+  - Domain Admins
+  - Enterprise Admins
+  - Schema Admins
+  - Administrators
+  - Account Operators
+  - Backup Operators
+  - Server Operators
+
+weak_kerberos_encryption: [RC4, DES]
+
+# Convention: svc-<app>-<env>, lowercase, hyphen-separated
+naming_pattern: '^svc-[a-z0-9]+(-[a-z0-9]+)*$'
+
+severity_weights: {low: 1, medium: 3, high: 8, critical: 15}
+
+# Minimum risk score per priority. Any critical finding is always P1;
+# P2 at 8 means any single high finding is at least P2.
+priority_thresholds: {P1: 20, P2: 8, P3: 4}
