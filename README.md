@@ -131,4 +131,5 @@ src/warden/
 tests/           pytest suite, including an end-to-end run of the CLI
 ```
 
+Built with AI-assisted coding. I reviewed and tested the code myself.
 All data is synthetic. Names, emails and domains are fictional.
