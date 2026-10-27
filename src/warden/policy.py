@@ -13,6 +13,7 @@ DEFAULTS = {
     "dormant_days": 90,
     "never_used_grace_days": 30,
     "password_max_age_days": 365,
+    "temp_account_max_days": 90,
     "privileged_groups": [
         "Domain Admins",
         "Enterprise Admins",
@@ -34,6 +35,7 @@ class Policy:
     dormant_days: int
     never_used_grace_days: int
     password_max_age_days: int
+    temp_account_max_days: int
     privileged_groups: tuple[str, ...]
     weak_kerberos_encryption: tuple[str, ...]
     naming_pattern: str
@@ -52,7 +54,7 @@ def build_policy(overrides: dict | None = None) -> Policy:
         raise ValueError(f"Unknown policy keys: {', '.join(sorted(unknown))}")
     merged = {**DEFAULTS, **data}
 
-    for key in ("dormant_days", "never_used_grace_days", "password_max_age_days"):
+    for key in ("dormant_days", "never_used_grace_days", "password_max_age_days", "temp_account_max_days"):
         if not isinstance(merged[key], int) or merged[key] <= 0:
             raise ValueError(f"{key} must be a positive integer")
     try:
@@ -74,6 +76,7 @@ def build_policy(overrides: dict | None = None) -> Policy:
         naming_pattern=merged["naming_pattern"],
         severity_weights=dict(merged["severity_weights"]),
         priority_thresholds=dict(merged["priority_thresholds"]),
+        temp_account_max_days=merged["temp_account_max_days"],
     )
 
 

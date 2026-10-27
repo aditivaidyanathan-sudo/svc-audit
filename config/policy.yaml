@@ -4,6 +4,7 @@
 dormant_days: 90              # enabled account with no logon for longer than this
 never_used_grace_days: 30     # new accounts get this long before "never used" is flagged
 password_max_age_days: 365
+temp_account_max_days: 90     # temporary accounts older than this are flagged
 
 privileged_groups:
   - Domain Admins

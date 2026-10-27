@@ -1,4 +1,4 @@
-"""Turn findings into a prioritised remediation queue and write the outputs."""
+﻿"""Turn findings into a prioritised remediation queue and write the outputs."""
 from __future__ import annotations
 
 import csv
@@ -33,6 +33,7 @@ RULE_ACTIONS = {
     "DORMANT": DISABLE,
     "NEVER_USED": DISABLE,
     "EXCEPTION_EXPIRED": RENEW,
+    "TEMP_ACCOUNT": DISABLE,
 }
 
 

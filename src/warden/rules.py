@@ -41,7 +41,12 @@ def evaluate_account(
         add("NAMING", "low", "Name does not follow the service-account naming convention")
     if not account.description:
         add("NO_DESCRIPTION", "low", "No description; purpose unknown")
-
+    TEMP_WORDS = ("temp", "temporary", "migration")
+    if account.enabled and account.created and any(word in account.description.lower() for word in TEMP_WORDS):
+        age = (as_of - account.created).days
+        if age > policy.temp_account_max_days:
+            add("TEMP_ACCOUNT", "medium", f"Described as temporary but {age} days old")
+            
     # Usage and credentials only matter while the account can still log on.
     if account.enabled:
         if account.last_logon is None:
@@ -94,3 +99,11 @@ def evaluate_all(
 
 def has_ownership_gap(findings: list[Finding]) -> bool:
     return any(f.rule in OWNERSHIP_RULES and f.active for f in findings)
+
+def test_old_temp_account_is_flagged(people, policy):
+    account = make_account(description="temp account for migration", created=days_ago(200))
+    assert "TEMP_ACCOUNT" in rules_for(account, people, policy)
+
+def test_new_temp_account_is_not_flagged(people, policy):
+    account = make_account(description="temp account for migration", created=days_ago(10))
+    assert "TEMP_ACCOUNT" not in rules_for(account, people, policy)
