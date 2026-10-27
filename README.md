@@ -64,6 +64,7 @@ Scanned 500 accounts as of 2026-10-21: 283 need action (P1 36, P2 156, P3 91), 1
 | `WEAK_KERBEROS` | high | Has an SPN and allows RC4/DES, so its tickets can be cracked offline |
 | `NAMING` | low | Name breaks the convention, so purpose can't be read from it |
 | `NO_DESCRIPTION` | low | Purpose unknown |
+| `TEMP_ACCOUNT` | medium | Described as temporary or migration but older than `temp_account_max_days` |
 | `EXCEPTION_EXPIRED` | medium | A risk exception lapsed |
 
 Thresholds, privileged groups and the naming convention live in `config/policy.yaml`. Unknown keys are rejected, so a typo can't silently fall back to a default.
@@ -131,5 +132,5 @@ src/warden/
 tests/           pytest suite, including an end-to-end run of the CLI
 ```
 
-Built with AI-assisted coding. I reviewed and tested the code myself.
+Built with AI-assisted coding. I reviewed, tested and extended the code myself.
 All data is synthetic. Names, emails and domains are fictional.
