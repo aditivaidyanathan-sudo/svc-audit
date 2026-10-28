@@ -1,6 +1,6 @@
 from conftest import make_account
 
-from warden.owners import MAX_CONFIDENCE, OwnerInference, app_key
+from svc_audit.owners import MAX_CONFIDENCE, OwnerInference, app_key
 
 
 def test_app_key_handles_naming_variants():

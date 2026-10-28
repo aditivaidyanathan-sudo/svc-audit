@@ -173,7 +173,7 @@ def render_markdown(
     actions = Counter(q.primary_action for q in queue)
 
     lines = [
-        "# Warden service-account review",
+        "# svc-audit service-account review",
         "",
         f"- **As of:** {meta['as_of']}",
         f"- **Accounts scanned:** {meta['accounts']}",
@@ -184,7 +184,7 @@ def render_markdown(
         f"- **Data-quality issues:** {len(issues)}",
         f"- **Owner decisions applied from audit log:** {meta.get('owner_overrides', 0)}",
         "",
-        "> This run changed nothing. Warden is read-only: it reports and recommends. "
+        "> This run changed nothing. svc-audit is read-only: it reports and recommends. "
         "Disabling accounts, rotating credentials and removing group memberships are "
         "production changes for IAM engineering.",
         "",
@@ -207,7 +207,7 @@ def render_markdown(
     if owner_items:
         lines += ["", "## Suggested owners to contact", "",
                   "Suggestions only. Each must be confirmed by the person before it is recorded "
-                  "(`warden decide --decision owner-confirmed`).", ""]
+                  "(`svc-audit decide --decision owner-confirmed`).", ""]
         for q in owner_items:
             lines.append(f"- `{q.account}`")
             lines += [f"  - {c}" for c in q.owner_candidates]

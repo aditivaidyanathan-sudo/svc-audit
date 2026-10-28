@@ -1,6 +1,6 @@
 import pytest
 
-from warden.policy import build_policy, load_policy
+from svc_audit.policy import build_policy, load_policy
 
 
 def test_defaults():

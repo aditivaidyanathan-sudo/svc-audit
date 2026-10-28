@@ -1,6 +1,6 @@
 import json
 
-from warden import audit
+from svc_audit import audit
 
 
 def test_entries_chain_and_verify(tmp_path):

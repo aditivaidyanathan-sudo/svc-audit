@@ -1,6 +1,6 @@
 from conftest import AS_OF, days_ago, make_account
 
-from warden.rules import evaluate_account
+from svc_audit.rules import evaluate_account
 
 
 def rules_for(account, people, policy):

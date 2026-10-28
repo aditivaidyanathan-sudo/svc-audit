@@ -3,8 +3,8 @@ from datetime import timedelta
 import yaml
 from conftest import AS_OF
 
-from warden.exceptions import RiskException, apply_exceptions, load_exceptions
-from warden.models import Finding
+from svc_audit.exceptions import RiskException, apply_exceptions, load_exceptions
+from svc_audit.models import Finding
 
 
 def exc(rule="PRIVILEGED", days=30, account="svc-a"):

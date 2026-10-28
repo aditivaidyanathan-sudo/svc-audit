@@ -3,8 +3,8 @@ import csv
 
 import pytest
 
-from warden.cli import main
-from warden.generate import generate
+from svc_audit.cli import main
+from svc_audit.generate import generate
 
 AS_OF = "2026-10-21"
 

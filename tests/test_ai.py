@@ -2,7 +2,7 @@ from types import SimpleNamespace
 
 from conftest import make_account
 
-from warden.ai import build_prompt, suggest_purpose
+from svc_audit.ai import build_prompt, suggest_purpose
 
 
 class FakeClient:

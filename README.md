@@ -1,32 +1,32 @@
-# Warden
+# svc-audit
 
 A read-only governance scanner for service accounts.
 
-Warden takes a directory export of service accounts and an HR feed, finds accounts that are dormant, unowned, over-privileged or carrying weak credentials, suggests who probably owns them, and produces a prioritised remediation queue with a tamper-evident audit trail.
+svc-audit takes a directory export of service accounts and an HR feed, finds accounts that are dormant, unowned, over-privileged or carrying weak credentials, suggests who probably owns them, and produces a prioritised remediation queue with a tamper-evident audit trail.
 
-It does not change anything. That is deliberate (see [What Warden deliberately doesn't do](#what-warden-deliberately-doesnt-do)).
+It does not change anything. That is deliberate (see [What svc-audit deliberately doesn't do](#what-svc-audit-deliberately-doesnt-do)).
 
 ## Why
 
-Service accounts tend to outlive the people and projects that created them. In most estates nobody can say, for every machine identity, what it is for, who owns it, what it can access and when it should be retired. Machine identities are also multiplying as AI agents get their own credentials. Warden is a working model of the first step: find the gaps, establish ownership, and record every decision.
+Service accounts tend to outlive the people and projects that created them. In most estates nobody can say, for every machine identity, what it is for, who owns it, what it can access and when it should be retired. Machine identities are also multiplying as AI agents get their own credentials. svc-audit is a working model of the first step: find the gaps, establish ownership, and record every decision.
 
 ## Quick start
 
 ```bash
 pip install -e ".[dev]"
 
-warden generate --out data       # synthetic, deliberately messy demo data
-warden scan                      # writes out/report.md and three CSVs
-warden verify-log                # checks the audit log hash chain
+svc-audit generate --out data       # synthetic, deliberately messy demo data
+svc-audit scan                      # writes out/report.md and three CSVs
+svc-audit verify-log                # checks the audit log hash chain
 pytest -q
 ```
 
 Recording the outcome of an investigation:
 
 ```bash
-warden decide --account svc-fixgateway-prod --decision owner-confirmed \
+svc-audit decide --account svc-fixgateway-prod --decision owner-confirmed \
   --owner victor.xu@corp.example --by aditi --note "Confirmed by email, 21 Oct"
-warden scan                      # the confirmed owner now overrides the export
+svc-audit scan                      # the confirmed owner now overrides the export
 ```
 
 Decision types: `owner-confirmed`, `dependency-found`, `retirement-approved`, `exception-requested`, `note`. Every decision needs `--by` and `--note`.
@@ -75,9 +75,9 @@ Thresholds, privileged groups and the naming convention live in `config/policy.y
 
 **Ownership before action.** The queue never recommends disabling an account before someone owns the decision. Action order is: escalate privileged or Kerberos exposure to engineering, confirm owner, disable after dependency check, schedule rotation, renew exceptions, review.
 
-**Owner suggestions are evidence, not assignments.** Candidates come from four signals: a person named in the description, who owns the other accounts for the same application, the manager of a departed owner, and the head of the recorded department. Each carries a score and its reasons. Confidence is capped at 0.95 because inference is never certain, and anything below 0.1 is dropped as noise. An owner only changes when a person confirms it via `warden decide`.
+**Owner suggestions are evidence, not assignments.** Candidates come from four signals: a person named in the description, who owns the other accounts for the same application, the manager of a departed owner, and the head of the recorded department. Each carries a score and its reasons. Confidence is capped at 0.95 because inference is never certain, and anything below 0.1 is dropped as noise. An owner only changes when a person confirms it via `svc-audit decide`.
 
-**Messy data is reported, not hidden.** Bad rows don't crash the run. Each problem is logged with its file, row and field. Where a value can't be read, Warden assumes the riskier reading (an unreadable `enabled` flag is treated as enabled) so problems are over-reported rather than missed. UK `DD/MM/YYYY` dates are accepted, and ambiguous ones (04/03/2025) are flagged.
+**Messy data is reported, not hidden.** Bad rows don't crash the run. Each problem is logged with its file, row and field. Where a value can't be read, svc-audit assumes the riskier reading (an unreadable `enabled` flag is treated as enabled) so problems are over-reported rather than missed. UK `DD/MM/YYYY` dates are accepted, and ambiguous ones (04/03/2025) are flagged.
 
 **Exceptions are explicit and time-limited.** Each must name the account, rule, reason, approver and expiry. Incomplete entries are rejected. Expired exceptions raise a new finding instead of quietly lapsing. Critical findings cannot be waived.
 
@@ -88,7 +88,7 @@ Thresholds, privileged groups and the naming convention live in `config/policy.y
 ```bash
 pip install -e ".[ai]"
 export ANTHROPIC_API_KEY=...
-warden scan --ai
+svc-audit scan --ai
 ```
 
 For accounts with an ownership gap, an LLM suggests the account's purpose and likely team from its name, description, groups and SPNs. Guardrails:
@@ -99,7 +99,7 @@ For accounts with an ownership gap, an LLM suggests the account's purpose and li
 
 The point is to speed up the investigation, not to replace the person who has to sign off on it.
 
-## What Warden deliberately doesn't do
+## What svc-audit deliberately doesn't do
 
 - Disable, delete or move accounts
 - Rotate passwords or change Kerberos encryption settings
@@ -117,7 +117,7 @@ The point is to speed up the investigation, not to replace the person who has to
 ## Layout
 
 ```
-src/warden/
+src/svc_audit/
   models.py      data types
   loader.py      CSV loading, normalisation and data-quality issues
   policy.py      YAML policy with validation

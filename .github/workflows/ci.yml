@@ -19,6 +19,6 @@ jobs:
       - run: pytest -q
       - name: Smoke test the CLI end to end
         run: |
-          warden generate --out data --as-of 2026-10-21
-          warden scan --as-of 2026-10-21
-          warden verify-log
+          svc-audit generate --out data --as-of 2026-10-21
+          svc-audit scan --as-of 2026-10-21
+          svc-audit verify-log

@@ -1,9 +1,9 @@
 """Command-line interface.
 
-    warden generate    create synthetic demo data
-    warden scan        evaluate accounts and build the remediation queue (read-only)
-    warden decide      record an investigation decision in the audit log
-    warden verify-log  check the audit log has not been altered
+    svc-audit generate    create synthetic demo data
+    svc-audit scan        evaluate accounts and build the remediation queue (read-only)
+    svc-audit decide      record an investigation decision in the audit log
+    svc-audit verify-log  check the audit log has not been altered
 """
 from __future__ import annotations
 
@@ -124,7 +124,7 @@ def cmd_verify(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="warden", description=__doc__,
+    parser = argparse.ArgumentParser(prog="svc-audit", description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="command", required=True)
     as_of = dict(type=date.fromisoformat, default=None, help="evaluation date YYYY-MM-DD (default: today)")

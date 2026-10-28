@@ -2,8 +2,8 @@ from datetime import date, timedelta
 
 import pytest
 
-from warden.models import Person, ServiceAccount
-from warden.policy import build_policy
+from svc_audit.models import Person, ServiceAccount
+from svc_audit.policy import build_policy
 
 AS_OF = date(2026, 10, 21)
 

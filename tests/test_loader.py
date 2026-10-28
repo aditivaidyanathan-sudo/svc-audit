@@ -2,8 +2,8 @@ from datetime import date
 
 import pytest
 
-from warden.loader import load_accounts, load_people
-from warden.models import ACCOUNT_FIELDS, HR_FIELDS
+from svc_audit.loader import load_accounts, load_people
+from svc_audit.models import ACCOUNT_FIELDS, HR_FIELDS
 
 
 def write_csv(path, header, rows):

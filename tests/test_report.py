@@ -1,7 +1,7 @@
 from conftest import make_account
 
-from warden.models import Finding
-from warden.report import CONFIRM, DISABLE, ESCALATE, build_queue, recommend_actions, risk_score
+from svc_audit.models import Finding
+from svc_audit.report import CONFIRM, DISABLE, ESCALATE, build_queue, recommend_actions, risk_score
 
 
 def f(rule, severity="medium", suppressed=None):

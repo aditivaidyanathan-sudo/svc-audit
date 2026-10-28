@@ -35,7 +35,7 @@ def suggest_purpose(account: ServiceAccount, client=None, model: str = DEFAULT_M
         return None
     try:
         if client is None:
-            import anthropic  # optional dependency: pip install warden[ai]
+            import anthropic  # optional dependency: pip install svc-audit[ai]
 
             client = anthropic.Anthropic()
         response = client.messages.create(

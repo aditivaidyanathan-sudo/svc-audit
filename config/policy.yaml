@@ -1,4 +1,4 @@
-# Warden governance policy. Change thresholds here, not in code.
+# svc-audit governance policy. Change thresholds here, not in code.
 # Unknown keys are rejected so a typo cannot silently fall back to a default.
 
 dormant_days: 90              # enabled account with no logon for longer than this
